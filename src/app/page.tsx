@@ -2,6 +2,7 @@ import { Header } from "@/components/header";
 import { DramaCarousel } from "@/components/drama-carousel";
 import { dramas } from "@/lib/data";
 import { HeroSection } from "@/components/hero-section";
+import { Footer } from "@/components/footer";
 
 export default function Home() {
   const trendingDramas = dramas.slice(0, 8);
@@ -24,11 +25,7 @@ export default function Home() {
           <DramaCarousel title="ห้ามพลาด!" dramas={notToBeMissedDramas} />
         </div>
       </main>
-      <footer className="py-6 mt-12">
-        <div className="container mx-auto px-4 text-center text-muted-foreground text-sm">
-          <p>&copy; {new Date().getFullYear()} NetShorts. All Rights Reserved.</p>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
