@@ -1,12 +1,14 @@
 import Link from "next/link";
-import { PlayCircle, Search, Menu, X, Home, Film, Download, Info } from "lucide-react";
+import { PlayCircle, Search, Menu, X, Home, Film, Download, Info, ChevronDown, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
+
 
 export function Header() {
   return (
-    <header className="bg-background/80 backdrop-blur-sm text-primary-foreground sticky top-0 z-50">
+    <header className="bg-background/80 backdrop-blur-sm text-primary-foreground sticky top-0 z-50 border-b border-gray-800">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center gap-8">
@@ -17,7 +19,7 @@ export function Header() {
               </h1>
             </Link>
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
-              <Link href="#" className="text-white hover:text-primary transition-colors">หน้าหลัก</Link>
+              <Link href="/" className="text-white hover:text-primary transition-colors">หน้าหลัก</Link>
               <Link href="#" className="text-white hover:text-primary transition-colors">ซีรีส์</Link>
               <Link href="#" className="text-white hover:text-primary transition-colors">ดาวน์โหลด</Link>
               <Link href="#" className="text-white hover:text-primary transition-colors">ข้อมูล</Link>
@@ -33,6 +35,21 @@ export function Header() {
                 className="pl-10 w-64 bg-secondary text-white placeholder:text-muted-foreground rounded-full border-transparent focus:bg-secondary/80 focus:ring-primary/50"
               />
             </div>
+             <DropdownMenu>
+              <DropdownMenuTrigger asChild>
+                <Button variant="ghost" className="hidden md:flex items-center gap-2 text-white">
+                  <User className="h-5 w-5"/>
+                  บัญชีไทย
+                  <ChevronDown className="h-4 w-4" />
+                </Button>
+              </DropdownMenuTrigger>
+              <DropdownMenuContent className="w-56">
+                <DropdownMenuItem>โปรไฟล์</DropdownMenuItem>
+                <DropdownMenuItem>การตั้งค่า</DropdownMenuItem>
+                <DropdownMenuItem>ออกจากระบบ</DropdownMenuItem>
+              </DropdownMenuContent>
+            </DropdownMenu>
+
             <div className="md:hidden">
               <Sheet>
                 <SheetTrigger asChild>
