@@ -8,7 +8,7 @@ import { DramaCarousel } from '@/components/drama-carousel';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ThumbsUp, Bookmark, ChevronUp, ChevronDown, PlayIcon, ChevronRight } from 'lucide-react';
+import { ThumbsUp, Bookmark, ChevronUp, ChevronDown, PlayIcon, ChevronRight, Share2, Plus, Info } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { useState } from 'react';
 
@@ -49,7 +49,8 @@ export function DramaClientPage({ drama, recommendedDramas }: DramaClientPagePro
             <Header />
             <main className="flex-1 container mx-auto px-4 py-8">
                <div className="max-w-7xl mx-auto">
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                    {/* Desktop Layout */}
+                    <div className="hidden lg:grid grid-cols-1 lg:grid-cols-3 gap-8">
                         <div className="lg:col-span-2">
                             <div className="relative aspect-video bg-black rounded-lg overflow-hidden">
                                 <Image
@@ -146,6 +147,74 @@ export function DramaClientPage({ drama, recommendedDramas }: DramaClientPagePro
                             </Tabs>
                         </div>
                     </div>
+
+                    {/* Mobile Layout */}
+                    <div className="lg:hidden">
+                        <div className="relative aspect-[9/13] -mx-4 -mt-8 mb-4">
+                             <Image
+                                src={drama.coverArt.replace('300x450', '800x1200')}
+                                alt={`Background for ${drama.title}`}
+                                fill
+                                className="object-cover"
+                                data-ai-hint={drama.dataAiHint}
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-background via-background/60 to-transparent" />
+                        </div>
+                        <div className="flex flex-col items-center text-center -mt-24 relative z-10">
+                            <h1 className="text-4xl font-bold mb-2">{drama.title}</h1>
+                            <div className="flex items-center gap-4 text-sm text-muted-foreground mb-4">
+                                <span>{drama.genre}</span>
+                                <span>•</span>
+                                <span>78 ตอน</span>
+                            </div>
+                            <p className="text-sm text-gray-300 mb-6 px-4">
+                                {drama.description}
+                            </p>
+                            <div className="flex justify-center w-full gap-2 px-4 mb-6">
+                                <Button className="flex-1 bg-primary text-primary-foreground">
+                                    <PlayIcon className="mr-2 h-4 w-4" />
+                                    เล่น
+                                </Button>
+                                <Button variant="secondary" size="icon"><Plus /></Button>
+                                <Button variant="secondary" size="icon"><Share2 /></Button>
+                                <Button variant="secondary" size="icon"><Info /></Button>
+                            </div>
+                        </div>
+
+                         <div className="bg-[#1C1C1C] rounded-lg p-4">
+                             <Tabs defaultValue={`${episodeChunks[0][0]}-${episodeChunks[0][episodeChunks[0].length-1]}`} className="w-full">
+                                <div className='flex justify-between items-center mb-4'>
+                                    <h2 className="text-xl font-bold">ตอน</h2>
+                                    <Button variant="link" className="text-sm text-gray-400">
+                                        ตอนทั้งหมด <ChevronRight className="h-4 w-4"/>
+                                    </Button>
+                                </div>
+                                <TabsList className="grid grid-cols-3 w-full h-auto mb-4">
+                                    {episodeChunks.map((chunk, index) => (
+                                        <TabsTrigger key={index} value={`${chunk[0]}-${chunk[chunk.length - 1]}`}>{`${chunk[0]}-${chunk[chunk.length - 1]}`}</TabsTrigger>
+                                    ))}
+                                </TabsList>
+                                {episodeChunks.map((chunk, index) => (
+                                    <TabsContent key={index} value={`${chunk[0]}-${chunk[chunk.length-1]}`}>
+                                        <div className="grid grid-cols-5 gap-2 mt-4">
+                                            {chunk.map(episode => (
+                                                <Button 
+                                                    key={episode} 
+                                                    variant={episode === currentEpisode ? 'destructive' : 'secondary'}
+                                                    className="aspect-square h-auto w-full p-0 text-sm font-normal relative"
+                                                >
+                                                    {episode === currentEpisode && <PlayIcon className="absolute w-4 h-4 text-white"/>}
+                                                    <span className={`${episode === currentEpisode ? 'opacity-20' : ''}`}>{episode}</span>
+                                                </Button>
+                                            ))}
+                                        </div>
+                                    </TabsContent>
+                                ))}
+                            </Tabs>
+                        </div>
+                    </div>
+
+
                     <div className="mt-12">
                         <DramaCarousel title="แนะนำสำหรับคุณ" dramas={recommendedDramas} />
                     </div>
