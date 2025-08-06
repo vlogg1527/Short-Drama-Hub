@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import Link from 'next/link';
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { DramaCard } from "@/components/drama-card";
@@ -51,14 +52,15 @@ export default function SeriesPage() {
           
           <div className="flex flex-wrap items-center gap-2 mb-8">
             {displayedGenres.map((genre) => (
-              <Button 
-                key={genre} 
-                variant={selectedGenre === genre ? 'destructive' : 'secondary'}
-                className="rounded-full text-sm font-normal"
-                onClick={() => handleGenreClick(genre)}
-              >
-                {genre}
-              </Button>
+                <Button 
+                    key={genre} 
+                    variant={selectedGenre === genre ? 'destructive' : 'secondary'}
+                    className="rounded-full text-sm font-normal"
+                    onClick={() => handleGenreClick(genre)}
+                    asChild
+                >
+                    <Link href={`/category/${encodeURIComponent(genre)}`}>{genre}</Link>
+                </Button>
             ))}
              <Button variant="secondary" size="icon" className="rounded-full" onClick={() => setIsExpanded(!isExpanded)}>
                 {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
