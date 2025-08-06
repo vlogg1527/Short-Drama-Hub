@@ -1,10 +1,8 @@
 import Link from "next/link";
-import { PlayCircle, Search, Menu, X, Home, Film, Download, Info, ChevronDown, User } from "lucide-react";
+import { PlayCircle, Search, Menu, X, Home, Film, Download, Info, User } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
-import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger } from "@/components/ui/dropdown-menu";
-
 
 export function Header() {
   return (
@@ -35,21 +33,11 @@ export function Header() {
                 className="pl-10 w-64 bg-secondary text-white placeholder:text-muted-foreground rounded-full border-transparent focus:bg-secondary/80 focus:ring-primary/50"
               />
             </div>
-             <DropdownMenu>
-              <DropdownMenuTrigger asChild>
-                <Button variant="ghost" className="hidden md:flex items-center gap-2 text-white">
-                  <User className="h-5 w-5"/>
-                  บัญชีไทย
-                  <ChevronDown className="h-4 w-4" />
-                </Button>
-              </DropdownMenuTrigger>
-              <DropdownMenuContent className="w-56">
-                <DropdownMenuItem>โปรไฟล์</DropdownMenuItem>
-                <DropdownMenuItem>การตั้งค่า</DropdownMenuItem>
-                <DropdownMenuItem>ออกจากระบบ</DropdownMenuItem>
-              </DropdownMenuContent>
-            </DropdownMenu>
-
+            <Button variant="ghost" className="hidden md:flex items-center gap-2 text-white">
+                <User className="h-5 w-5"/>
+                บัญชีไทย
+            </Button>
+            
             <div className="md:hidden">
               <Sheet>
                 <SheetTrigger asChild>
@@ -74,7 +62,7 @@ export function Header() {
                     <nav className="flex flex-col p-4 gap-2">
                          <SheetClose asChild>
                             <Button asChild variant="ghost" className="justify-start text-lg gap-4">
-                               <Link href="#"><Home /> หน้าหลัก</Link>
+                               <Link href="/"><Home /> หน้าหลัก</Link>
                             </Button>
                         </SheetClose>
                         <SheetClose asChild>
