@@ -2,7 +2,7 @@ import Link from "next/link";
 import { PlayCircle, Search, Menu, X, Home, Film, Download, Info, User, Newspaper } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
+import { Sheet, SheetContent, SheetTrigger, SheetClose, SheetTitle, SheetDescription } from "@/components/ui/sheet";
 
 export function Header() {
   return (
@@ -18,7 +18,7 @@ export function Header() {
             </Link>
             <nav className="hidden md:flex items-center gap-6 text-sm font-medium">
               <Link href="/" className="text-white hover:text-primary transition-colors">หน้าหลัก</Link>
-              <Link href="#" className="text-white hover:text-primary transition-colors">ซีรีส์</Link>
+              <Link href="/series" className="text-white hover:text-primary transition-colors">ซีรีส์</Link>
               <Link href="/blog" className="text-white hover:text-primary transition-colors">บล็อก</Link>
               <Link href="#" className="text-white hover:text-primary transition-colors">ข้อมูล</Link>
             </nav>
@@ -46,6 +46,8 @@ export function Header() {
                   </Button>
                 </SheetTrigger>
                 <SheetContent side="right" className="bg-background border-l border-secondary w-[250px] p-0">
+                    <SheetTitle className="sr-only">Mobile Menu</SheetTitle>
+                    <SheetDescription className="sr-only">A menu for navigating the site on mobile devices.</SheetDescription>
                     <div className="p-4 flex justify-between items-center border-b border-secondary">
                         <Link href="/" className="flex items-center gap-2">
                             <PlayCircle className="h-8 w-8 text-primary" />
@@ -67,7 +69,7 @@ export function Header() {
                         </SheetClose>
                         <SheetClose asChild>
                             <Button asChild variant="ghost" className="justify-start text-lg gap-4">
-                                <Link href="#"><Film /> ซีรีส์</Link>
+                                <Link href="/series"><Film /> ซีรีส์</Link>
                             </Button>
                         </SheetClose>
                         <SheetClose asChild>
