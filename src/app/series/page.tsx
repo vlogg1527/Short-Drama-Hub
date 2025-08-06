@@ -17,7 +17,7 @@ const genres = [
     "นักเลง", "ตัวตนลับ", "สามีแต่งเข้า", "ได้กลับ", "หย่าแล้วค่อยตามง้อ", "ครอบครัว", "เยียวยาหัวใจ",
     "นางอ่อนโยน", "รักข้ามคืน", "สามีสายเปย์", "สมัยใหม่", "โชคชะตา", "วันสิ้นโลก", "แต่งก่อนรักทีหลัง",
     "เชฟ", "นอกใจ", "เทพการแพทย์", "ผู้ชายอบอุ่น", "ตั้งครรภ์", "การสมรสของตระกูลใหญ่", "ความจำเสื่อม",
-    "รักบังคับ", "แก้แค้นคนเลว"
+    "รักบังคับ", "แก้แค้นคนเลว", "Romance", "Action", "Comedy", "Thriller", "Fantasy", "Historical"
 ];
 
 const INITIAL_GENRES_COUNT = 27;
@@ -25,8 +25,17 @@ const INITIAL_GENRES_COUNT = 27;
 export default function SeriesPage() {
   const allDramas = [...dramas, ...dramas, ...dramas.slice(0, 6)];
   const [isExpanded, setIsExpanded] = useState(false);
+  const [selectedGenre, setSelectedGenre] = useState('เรื่องย่อทั้งหมด');
 
   const displayedGenres = isExpanded ? genres : genres.slice(0, INITIAL_GENRES_COUNT);
+  
+  const handleGenreClick = (genre: string) => {
+    setSelectedGenre(genre);
+  };
+
+  const filteredDramas = allDramas.filter(drama => 
+    selectedGenre === 'เรื่องย่อทั้งหมด' || drama.genre === selectedGenre
+  );
 
   return (
     <div className="flex flex-col min-h-screen bg-background text-white">
@@ -41,11 +50,12 @@ export default function SeriesPage() {
           <h1 className="text-3xl font-bold mb-6">ซีรีส์ทั้งหมด</h1>
           
           <div className="flex flex-wrap items-center gap-2 mb-8">
-            {displayedGenres.map((genre, index) => (
+            {displayedGenres.map((genre) => (
               <Button 
                 key={genre} 
-                variant={index === 0 ? 'destructive' : 'secondary'}
+                variant={selectedGenre === genre ? 'destructive' : 'secondary'}
                 className="rounded-full text-sm font-normal"
+                onClick={() => handleGenreClick(genre)}
               >
                 {genre}
               </Button>
@@ -56,7 +66,7 @@ export default function SeriesPage() {
           </div>
 
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-8">
-            {allDramas.map((drama, index) => (
+            {filteredDramas.map((drama, index) => (
               <DramaCard key={`${drama.id}-${index}`} drama={drama} />
             ))}
           </div>
