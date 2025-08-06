@@ -1,7 +1,7 @@
 // src/app/drama/[id]/drama-client-page.tsx
 'use client';
 
-import type { Drama } from '@/lib/data';
+import type { Drama, dramas as alldramas } from '@/lib/data';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { DramaCarousel } from '@/components/drama-carousel';
@@ -11,8 +11,9 @@ import { Badge } from '@/components/ui/badge';
 import { ThumbsUp, Bookmark, ChevronUp, ChevronDown, PlayIcon, ChevronRight, Share2, Plus, Info, MessageCircle, Heart, ChevronLeft } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
@@ -30,11 +31,15 @@ const LinkIcon = (props: React.SVGProps<SVGSVGElement>) => (
 interface DramaClientPageProps {
     drama: Drama;
     recommendedDramas: Drama[];
+    totalDramas: number;
 }
 
-export function DramaClientPage({ drama, recommendedDramas }: DramaClientPageProps) {
+export function DramaClientPage({ drama, recommendedDramas, totalDramas }: DramaClientPageProps) {
     const [isExpanded, setIsExpanded] = useState(false);
-    
+    const router = useRouter();
+    const touchStartY = useRef(0);
+    const touchEndY = useRef(0);
+
     const totalEpisodes = 78;
     const episodesPerPage = 30;
     const totalPages = Math.ceil(totalEpisodes / episodesPerPage);
@@ -45,6 +50,33 @@ export function DramaClientPage({ drama, recommendedDramas }: DramaClientPagePro
     );
 
     const currentEpisode = 7;
+
+    const handleTouchStart = (e: React.TouchEvent) => {
+        touchStartY.current = e.targetTouches[0].clientY;
+    };
+
+    const handleTouchMove = (e: React.TouchEvent) => {
+        touchEndY.current = e.targetTouches[0].clientY;
+    };
+
+    const handleTouchEnd = () => {
+        if (touchStartY.current - touchEndY.current > 75) { // Swipe Up
+            const nextId = drama.id + 1;
+            if (nextId <= totalDramas) {
+                router.push(`/drama/${nextId}`);
+            }
+        }
+
+        if (touchEndY.current - touchStartY.current > 75) { // Swipe Down
+            const prevId = drama.id - 1;
+            if (prevId > 0) {
+                router.push(`/drama/${prevId}`);
+            }
+        }
+        // Reset refs
+        touchStartY.current = 0;
+        touchEndY.current = 0;
+    };
 
     return (
         <div className="flex flex-col min-h-screen bg-[#141414] text-white">
@@ -151,7 +183,11 @@ export function DramaClientPage({ drama, recommendedDramas }: DramaClientPagePro
                     </div>
 
                     {/* Mobile Layout */}
-                    <div className="lg:hidden fixed inset-0 bg-black">
+                    <div className="lg:hidden fixed inset-0 bg-black"
+                         onTouchStart={handleTouchStart}
+                         onTouchMove={handleTouchMove}
+                         onTouchEnd={handleTouchEnd}
+                    >
                         <div className="relative h-full w-full">
                             <Image
                                 src={drama.coverArt.replace('300x450', '800x1200')}

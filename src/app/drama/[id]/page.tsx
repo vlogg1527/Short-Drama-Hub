@@ -11,5 +11,5 @@ export default function DramaPage({ params }: { params: { id: string } }) {
 
     const recommendedDramas = [...dramas].sort(() => 0.5 - Math.random()).slice(0, 6);
 
-    return <DramaClientPage drama={drama} recommendedDramas={recommendedDramas} />;
+    return <DramaClientPage drama={drama} recommendedDramas={recommendedDramas} totalDramas={dramas.length} />;
 }
