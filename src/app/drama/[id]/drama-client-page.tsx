@@ -8,7 +8,7 @@ import { DramaCarousel } from '@/components/drama-carousel';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ThumbsUp, Bookmark, ChevronUp, ChevronDown, PlayIcon, ChevronRight, Share2, Plus, Info, MessageCircle, Heart } from 'lucide-react';
+import { ThumbsUp, Bookmark, ChevronUp, ChevronDown, PlayIcon, ChevronRight, Share2, Plus, Info, MessageCircle, Heart, ChevronLeft } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useState } from 'react';
