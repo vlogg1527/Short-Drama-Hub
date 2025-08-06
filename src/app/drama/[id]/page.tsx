@@ -1,4 +1,5 @@
 // src/app/drama/[id]/page.tsx
+'use client';
 import { dramas } from '@/lib/data';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
@@ -8,7 +9,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ThumbsUp, Bookmark, ChevronUp, ChevronDown, PlayIcon, ChevronRight } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import Link from 'next/link';
+import { useState } from 'react';
 
 const FacebookIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg {...props} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg>
@@ -25,6 +26,7 @@ const LinkIcon = (props: React.SVGProps<SVGSVGElement>) => (
 
 
 export default function DramaPage({ params }: { params: { id: string } }) {
+    const [isExpanded, setIsExpanded] = useState(false);
     const drama = dramas.find(d => d.id === parseInt(params.id));
     const recommendedDramas = [...dramas].sort(() => 0.5 - Math.random()).slice(0, 6);
 
@@ -32,11 +34,16 @@ export default function DramaPage({ params }: { params: { id: string } }) {
         return <div className="text-white text-center py-20">ไม่พบละครเรื่องนี้</div>;
     }
     
-    const episodeChunks = [
-        Array.from({ length: 30 }, (_, i) => i + 1),
-        Array.from({ length: 30 }, (_, i) => i + 31),
-        Array.from({ length: 30 }, (_, i) => i + 61),
-    ]
+    const totalEpisodes = 78;
+    const episodesPerPage = 30;
+    const totalPages = Math.ceil(totalEpisodes / episodesPerPage);
+    const episodeChunks = Array.from({ length: totalPages }, (_, pageIndex) => 
+        Array.from({ length: episodesPerPage }, (_, episodeInPageIndex) => 
+            pageIndex * episodesPerPage + episodeInPageIndex + 1
+        ).filter(ep => ep <= totalEpisodes)
+    );
+
+    const currentEpisode = 7;
 
     return (
         <div className="flex flex-col min-h-screen bg-[#141414] text-white">
@@ -56,7 +63,7 @@ export default function DramaPage({ params }: { params: { id: string } }) {
                                 <PlayIcon className="w-20 h-20 text-white/80" />
                             </div>
                             <div className="absolute top-2 left-2 bg-black/50 p-2 rounded">
-                                <p className='text-sm text-gray-300'>หน้าหลัก › ซีรี่ส์ › คุณหนูบุกมาเพื่อแก้เเค้น</p>
+                                <p className='text-sm text-gray-300'>หน้าหลัก › ซีรี่ส์ › {drama.title}</p>
                             </div>
                              <div className="absolute top-2 right-2">
                                 <Button size="sm" variant={'secondary'}>
@@ -77,7 +84,7 @@ export default function DramaPage({ params }: { params: { id: string } }) {
                     </div>
 
                     <div className="bg-[#1C1C1C] rounded-lg p-6">
-                        <h1 className="text-2xl font-bold mb-2">คุณหนูบุกมาเพื่อแก้แค้น ตอนที่ 1</h1>
+                        <h1 className="text-2xl font-bold mb-2">{drama.title} ตอนที่ {currentEpisode}</h1>
                         <div className="flex items-center gap-6 mb-4 text-sm text-muted-foreground">
                             <div className="flex items-center gap-2">
                                 <ThumbsUp className="h-5 w-5 text-gray-400" />
@@ -90,15 +97,17 @@ export default function DramaPage({ params }: { params: { id: string } }) {
                         </div>
 
                         <div className="flex flex-wrap gap-2 mb-4">
-                            <Badge variant="secondary">โรแมนติก</Badge>
-                            <Badge variant="secondary">ครอบครัว</Badge>
-                            <Badge variant="secondary">แก้แค้น</Badge>
+                            <Badge variant="secondary">{drama.genre}</Badge>
                         </div>
                         
-                        <p className="text-sm text-gray-300 mb-4 leading-relaxed">
-                        คุณหนูตระกูลฟู่ เฟิ่งอวี่เชียน ผู้ถูกทารุณกรรมจนเสียชีวิต ได้มีโอกาสกลับมาเกิดใหม่อีกครั้ง และในชาตินี้เธอก็ได้แต่งงานเป็นภรรยาของ เฉินโม่ และเริ่มต้นการแก้แค้นของเธอ... 
-                        <ChevronDown className="inline h-4 w-4"/>
+                        <p className={`text-sm text-gray-300 mb-4 leading-relaxed ${!isExpanded && 'line-clamp-2'}`}>
+                            {drama.description}
                         </p>
+                        <Button variant="link" className="p-0 h-auto text-gray-400 -mt-3 mb-4" onClick={() => setIsExpanded(!isExpanded)}>
+                            {isExpanded ? 'แสดงน้อยลง' : 'แสดงเพิ่มเติม'}
+                            <ChevronDown className={`inline h-4 w-4 ml-1 transition-transform ${isExpanded ? 'rotate-180' : ''}`}/>
+                        </Button>
+
 
                         <div className="flex items-center gap-3 mb-6">
                             <Button size="icon" className="rounded-full bg-blue-600 hover:bg-blue-700 h-9 w-9"><FacebookIcon className='text-white'/></Button>
@@ -107,12 +116,12 @@ export default function DramaPage({ params }: { params: { id: string } }) {
                             <Button size="icon" className="rounded-full bg-gray-600 hover:bg-gray-700 h-9 w-9"><LinkIcon className='text-white h-5 w-5'/></Button>
                         </div>
                         
-                        <Tabs defaultValue="1-30" className="w-full">
+                        <Tabs defaultValue={`${episodeChunks[0][0]}-${episodeChunks[0][episodeChunks[0].length-1]}`} className="w-full">
                             <div className='flex justify-between items-center'>
                                 <TabsList>
-                                    <TabsTrigger value="1-30">1-30</TabsTrigger>
-                                    <TabsTrigger value="31-60">31-60</TabsTrigger>
-                                    <TabsTrigger value="61-78">61-78</TabsTrigger>
+                                    {episodeChunks.map((chunk, index) => (
+                                        <TabsTrigger key={index} value={`${chunk[0]}-${chunk[chunk.length - 1]}`}>{`${chunk[0]}-${chunk[chunk.length - 1]}`}</TabsTrigger>
+                                    ))}
                                 </TabsList>
                                 <Button variant="link" className="text-sm text-gray-400">
                                     ตอนทั้งหมด <ChevronRight className="h-4 w-4"/>
@@ -124,26 +133,19 @@ export default function DramaPage({ params }: { params: { id: string } }) {
                                         {chunk.map(episode => (
                                             <Button 
                                                 key={episode} 
-                                                variant={episode === 7 ? 'destructive' : 'secondary'}
+                                                variant={episode === currentEpisode ? 'destructive' : 'secondary'}
                                                 className="aspect-square h-auto w-full p-0 text-sm font-normal relative"
                                             >
-                                                {episode === 7 && <PlayIcon className="absolute w-4 h-4 text-white"/>}
-                                                {episode >= 12 && episode <= 28 && episode % 2 == 0 && (
-                                                     <div className="absolute top-1 right-1">
-                                                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-yellow-400"><path d="M12 2L9 9h6l-3 7v6l3-7H9l3-7z"/></svg>
-                                                    </div>
-                                                )}
-                                                <span className={`${episode === 7 ? 'opacity-20' : ''}`}>{episode}</span>
+                                                {episode === currentEpisode && <PlayIcon className="absolute w-4 h-4 text-white"/>}
+                                                <span className={`${episode === currentEpisode ? 'opacity-20' : ''}`}>{episode}</span>
                                             </Button>
                                         ))}
                                     </div>
                                 </TabsContent>
                             ))}
                         </Tabs>
-
                     </div>
                 </div>
-
                 <div className="mt-12">
                      <DramaCarousel title="แนะนำสำหรับคุณ" dramas={recommendedDramas} />
                 </div>
