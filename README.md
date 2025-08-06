@@ -1,5 +1,22 @@
-# Firebase Studio
+# NetShorts
 
-This is a NextJS starter in Firebase Studio.
+ยินดีต้อนรับสู่ NetShorts! แพลตฟอร์มสำหรับค้นหาและรับชมละครสั้นที่กำลังเป็นกระแส
 
-To get started, take a look at src/app/page.tsx.
+## เริ่มต้นใช้งาน
+
+ในการรันโปรเจกต์นี้ในเครื่องของคุณ:
+
+1.  ติดตั้ง Dependencies:
+    ```bash
+    npm install
+    ```
+2.  รัน Development Server:
+    ```bash
+    npm run dev
+    ```
+
+เปิด [http://localhost:9002](http://localhost:9002) บนเบราว์เซอร์ของคุณเพื่อดูผลลัพธ์
+
+## เกี่ยวกับโปรเจกต์
+
+โปรเจกต์นี้สร้างขึ้นด้วย Next.js และ Tailwind CSS โดยเป็นส่วนหนึ่งของการเรียนรู้และพัฒนาเว็บแอปพลิเคชันสมัยใหม่
