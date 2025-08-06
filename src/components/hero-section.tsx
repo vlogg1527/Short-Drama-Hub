@@ -28,7 +28,7 @@ export function HeroSection() {
         <CarouselContent>
             {heroDramas.map((drama) => (
                 <CarouselItem key={drama.id}>
-                    <div className="relative h-[60vh] md:h-[80vh] min-h-[450px] md:min-h-[500px] w-full">
+                    <div className="relative h-[70vh] md:h-[80vh] min-h-[500px] md:min-h-[500px] w-full">
                         <Image
                             src={drama.coverArt.replace('300x450', '1920x1080')}
                             alt={`Background for ${drama.title}`}
