@@ -4,6 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Facebook, Instagram, Youtube, ArrowUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 
 const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
     <svg
@@ -22,9 +23,11 @@ const TikTokIcon = (props: React.SVGProps<SVGSVGElement>) => (
     </svg>
   );
 
-export function Footer() {
+interface FooterProps extends React.HTMLAttributes<HTMLElement> {}
+
+export function Footer({ className, ...props }: FooterProps) {
     return (
-        <footer className="bg-[#1C1C1C] text-muted-foreground py-12">
+        <footer className={cn("bg-[#1C1C1C] text-muted-foreground py-12", className)} {...props}>
             <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-8 relative">
                 <div className="col-span-1">
