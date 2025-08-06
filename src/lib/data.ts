@@ -30,7 +30,7 @@ export const dramas: Drama[] = [
     coverArt: "https://placehold.co/300x450.png",
     dataAiHint: "couple silhouette",
     genre: "Romance",
-    url: "#",
+    url: "/drama/1",
   },
   {
     id: 2,
@@ -39,7 +39,7 @@ export const dramas: Drama[] = [
     coverArt: "https://placehold.co/300x450.png",
     dataAiHint: "cyberpunk city",
     genre: "Action",
-    url: "#",
+    url: "/drama/2",
   },
   {
     id: 3,
@@ -48,7 +48,7 @@ export const dramas: Drama[] = [
     coverArt: "https://placehold.co/300x450.png",
     dataAiHint: "stage lights",
     genre: "Comedy",
-    url: "#",
+    url: "/drama/3",
   },
   {
     id: 4,
@@ -57,7 +57,7 @@ export const dramas: Drama[] = [
     coverArt: "https://placehold.co/300x450.png",
     dataAiHint: "dark alley",
     genre: "Thriller",
-    url: "#",
+    url: "/drama/4",
   },
   {
     id: 5,
@@ -66,7 +66,7 @@ export const dramas: Drama[] = [
     coverArt: "https://placehold.co/300x450.png",
     dataAiHint: "fantasy castle",
     genre: "Fantasy",
-    url: "#",
+    url: "/drama/5",
   },
   {
     id: 6,
@@ -75,7 +75,7 @@ export const dramas: Drama[] = [
     coverArt: "https://placehold.co/300x450.png",
     dataAiHint: "vintage portrait",
     genre: "Historical",
-    url: "#",
+    url: "/drama/6",
   },
   {
     id: 7,
@@ -84,7 +84,7 @@ export const dramas: Drama[] = [
     coverArt: "https://placehold.co/300x450.png",
     dataAiHint: "young love",
     genre: "Romance",
-    url: "#",
+    url: "/drama/7",
   },
   {
     id: 8,
@@ -93,7 +93,7 @@ export const dramas: Drama[] = [
     coverArt: "https://placehold.co/300x450.png",
     dataAiHint: "car chase",
     genre: "Action",
-    url: "#",
+    url: "/drama/8",
   },
   {
     id: 9,
@@ -102,7 +102,7 @@ export const dramas: Drama[] = [
     coverArt: "https://placehold.co/300x450.png",
     dataAiHint: "office cubicle",
     genre: "Comedy",
-    url: "#",
+    url: "/drama/9",
   },
   {
     id: 10,
@@ -111,7 +111,7 @@ export const dramas: Drama[] = [
     coverArt: "https://placehold.co/300x450.png",
     dataAiHint: "eerie room",
     genre: "Thriller",
-    url: "#",
+    url: "/drama/10",
   },
   {
     id: 11,
@@ -120,7 +120,7 @@ export const dramas: Drama[] = [
     coverArt: "https://placehold.co/300x450.png",
     dataAiHint: "dragon eye",
     genre: "Fantasy",
-    url: "#",
+    url: "/drama/11",
   },
   {
     id: 12,
@@ -129,6 +129,6 @@ export const dramas: Drama[] = [
     coverArt: "https://placehold.co/300x450.png",
     dataAiHint: "medieval battle",
     genre: "Historical",
-    url: "#",
+    url: "/drama/12",
   },
 ];

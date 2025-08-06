@@ -11,12 +11,7 @@ interface DramaCardProps {
 
 export function DramaCard({drama}: DramaCardProps) {
   return (
-    <Link
-      href={drama.url}
-      target="_blank"
-      rel="noopener noreferrer"
-      className="block group"
-    >
+    <Link href={drama.url} className="block group">
       <Card className="bg-transparent border-none shadow-none rounded-lg overflow-hidden transition-all duration-300 ease-in-out group-hover:scale-105 group-hover:shadow-2xl">
         <div className="aspect-[2/3] relative rounded-lg overflow-hidden">
           <Image
@@ -32,11 +27,21 @@ export function DramaCard({drama}: DramaCardProps) {
               {drama.title}
             </h3>
             <div className="flex items-center gap-2">
-              <Button size="sm" className="flex-1 bg-primary hover:bg-primary/90 rounded-md text-sm">
-                <PlayIcon className="mr-2 h-4 w-4" />
-                เล่นตอนนี้
+              <Button
+                asChild
+                size="sm"
+                className="flex-1 bg-primary hover:bg-primary/90 rounded-md text-sm"
+              >
+                <Link href={drama.url}>
+                  <PlayIcon className="mr-2 h-4 w-4" />
+                  เล่นตอนนี้
+                </Link>
               </Button>
-              <Button size="icon" variant="secondary" className="bg-white/20 hover:bg-white/30 text-white rounded-md h-9 w-9">
+              <Button
+                size="icon"
+                variant="secondary"
+                className="bg-white/20 hover:bg-white/30 text-white rounded-md h-9 w-9"
+              >
                 <Share2 className="h-4 w-4" />
               </Button>
             </div>
