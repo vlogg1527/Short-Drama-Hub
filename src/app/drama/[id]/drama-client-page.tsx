@@ -1,7 +1,7 @@
 // src/app/drama/[id]/drama-client-page.tsx
 'use client';
 
-import type { Drama, dramas as alldramas } from '@/lib/data';
+import type { Drama } from '@/lib/data';
 import { Header } from '@/components/header';
 import { Footer } from '@/components/footer';
 import { DramaCarousel } from '@/components/drama-carousel';
@@ -51,6 +51,21 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
 
     const currentEpisode = 7;
 
+    const navigateToNextDrama = () => {
+        const nextId = drama.id + 1;
+        if (nextId <= totalDramas) {
+            router.push(`/drama/${nextId}`);
+        }
+    };
+    
+    const navigateToPrevDrama = () => {
+        const prevId = drama.id - 1;
+        if (prevId > 0) {
+            router.push(`/drama/${prevId}`);
+        }
+    };
+
+
     const handleTouchStart = (e: React.TouchEvent) => {
         touchStartY.current = e.targetTouches[0].clientY;
     };
@@ -61,17 +76,11 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
 
     const handleTouchEnd = () => {
         if (touchStartY.current - touchEndY.current > 75) { // Swipe Up
-            const nextId = drama.id + 1;
-            if (nextId <= totalDramas) {
-                router.push(`/drama/${nextId}`);
-            }
+            navigateToNextDrama();
         }
 
         if (touchEndY.current - touchStartY.current > 75) { // Swipe Down
-            const prevId = drama.id - 1;
-            if (prevId > 0) {
-                router.push(`/drama/${prevId}`);
-            }
+            navigateToPrevDrama();
         }
         // Reset refs
         touchStartY.current = 0;
@@ -108,10 +117,10 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
                                 </div>
 
                                 <div className="absolute right-4 top-1/2 -translate-y-1/2 flex flex-col gap-2">
-                                    <Button size="icon" variant="secondary" className="bg-black/50 text-white hover:bg-black/80 rounded-full h-10 w-10">
+                                    <Button onClick={navigateToPrevDrama} size="icon" variant="secondary" className="bg-black/50 text-white hover:bg-black/80 rounded-full h-10 w-10">
                                         <ChevronUp className="h-5 w-5" />
                                     </Button>
-                                    <Button size="icon" variant="secondary" className="bg-black/50 text-white hover:bg-black/80 rounded-full h-10 w-10">
+                                    <Button onClick={navigateToNextDrama} size="icon" variant="secondary" className="bg-black/50 text-white hover:bg-black/80 rounded-full h-10 w-10">
                                         <ChevronDown className="h-5 w-5" />
                                     </Button>
                                 </div>
@@ -148,6 +157,7 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
                                 <Button size="icon" className="rounded-full bg-blue-600 hover:bg-blue-700 h-9 w-9"><FacebookIcon className='text-white'/></Button>
                                 <Button size="icon" className="rounded-full bg-black hover:bg-gray-800 h-9 w-9"><XIcon className='text-white h-5 w-5'/></Button>
                                 <Button size="icon" className="rounded-full bg-green-500 hover:bg-green-600 h-9 w-9"><LineIcon className='text-white'/></Button>
+
                                 <Button size="icon" className="rounded-full bg-gray-600 hover:bg-gray-700 h-9 w-9"><LinkIcon className='text-white h-5 w-5'/></Button>
                             </div>
                             
