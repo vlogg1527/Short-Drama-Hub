@@ -1,9 +1,22 @@
 import type {Metadata} from 'next';
 import './globals.css';
 import { Toaster } from "@/components/ui/toaster"
+import { Noto_Sans_Thai, Noto_Serif_Thai } from 'next/font/google';
+
+const notoSerifThai = Noto_Serif_Thai({
+  subsets: ['thai'],
+  weight: ['400', '700'],
+  variable: '--font-headline',
+});
+
+const notoSansThai = Noto_Sans_Thai({
+  subsets: ['thai'],
+  weight: ['400', '700'],
+  variable: '--font-body',
+});
 
 export const metadata: Metadata = {
-  title: 'Short Drama Hub',
+  title: 'NetShort',
   description: 'Discover and enjoy trending short dramas.',
 };
 
@@ -13,13 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=PT+Sans:wght@400;700&display=swap" rel="stylesheet" />
-      </head>
-      <body className="font-body antialiased">
+    <html lang="th" className="dark">
+      <body className={`${notoSerifThai.variable} ${notoSansThai.variable} font-body antialiased`}>
         {children}
         <Toaster />
       </body>

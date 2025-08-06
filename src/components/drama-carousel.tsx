@@ -15,24 +15,25 @@ interface DramaCarouselProps {
 
 export function DramaCarousel({ title, dramas }: DramaCarouselProps) {
   return (
-    <section className="my-12">
-      <h2 className="text-3xl font-headline font-bold mb-6 text-accent">{title}</h2>
+    <section className="my-8">
+      <h2 className="text-xl font-bold mb-4 text-white">{title}</h2>
       <Carousel
         opts={{
           align: "start",
-          loop: true,
+          dragFree: true,
+          slidesToScroll: 'auto',
         }}
         className="w-full"
       >
-        <CarouselContent>
+        <CarouselContent className="-ml-4">
           {dramas.map((drama) => (
-            <CarouselItem key={drama.id} className="basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/6">
+            <CarouselItem key={drama.id} className="pl-4 basis-1/2 sm:basis-1/3 md:basis-1/4 lg:basis-1/5 xl:basis-1/7 2xl:basis-1/8">
               <DramaCard drama={drama} />
             </CarouselItem>
           ))}
         </CarouselContent>
-        <CarouselPrevious className="text-foreground" />
-        <CarouselNext className="text-foreground" />
+        <CarouselPrevious className="text-white bg-black/50 hover:bg-primary -left-4" />
+        <CarouselNext className="text-white bg-black/50 hover:bg-primary -right-4" />
       </Carousel>
     </section>
   );
