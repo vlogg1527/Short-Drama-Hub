@@ -1,7 +1,8 @@
 import Link from "next/link";
-import { PlayCircle, Search, ChevronDown, Globe } from "lucide-react";
+import { PlayCircle, Search, Menu, X, Home, Film, Download, Info } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Sheet, SheetContent, SheetTrigger, SheetClose } from "@/components/ui/sheet";
 
 export function Header() {
   return (
@@ -32,11 +33,62 @@ export function Header() {
                 className="pl-10 w-64 bg-secondary text-white placeholder:text-muted-foreground rounded-full border-transparent focus:bg-secondary/80 focus:ring-primary/50"
               />
             </div>
-             <Button variant="ghost" className="hidden sm:inline-flex text-white hover:bg-secondary/80 hover:text-white">
-                <Globe className="mr-2 h-4 w-4" />
-                ภาษาไทย
-                <ChevronDown className="ml-1 h-4 w-4" />
-            </Button>
+            <div className="md:hidden">
+              <Sheet>
+                <SheetTrigger asChild>
+                  <Button variant="ghost" size="icon" className="text-white">
+                    <Menu className="h-6 w-6" />
+                  </Button>
+                </SheetTrigger>
+                <SheetContent side="right" className="bg-background border-l border-secondary w-[250px] p-0">
+                    <div className="p-4 flex justify-between items-center border-b border-secondary">
+                        <Link href="/" className="flex items-center gap-2">
+                            <PlayCircle className="h-8 w-8 text-primary" />
+                            <h1 className="text-xl font-headline font-bold text-white tracking-wider">
+                                NetShorts
+                            </h1>
+                        </Link>
+                        <SheetClose asChild>
+                             <Button variant="ghost" size="icon">
+                                <X className="h-6 w-6" />
+                            </Button>
+                        </SheetClose>
+                    </div>
+                    <nav className="flex flex-col p-4 gap-2">
+                         <SheetClose asChild>
+                            <Button asChild variant="ghost" className="justify-start text-lg gap-4">
+                               <Link href="#"><Home /> หน้าหลัก</Link>
+                            </Button>
+                        </SheetClose>
+                        <SheetClose asChild>
+                            <Button asChild variant="ghost" className="justify-start text-lg gap-4">
+                                <Link href="#"><Film /> ซีรีส์</Link>
+                            </Button>
+                        </SheetClose>
+                        <SheetClose asChild>
+                            <Button asChild variant="ghost" className="justify-start text-lg gap-4">
+                               <Link href="#"><Download /> ดาวน์โหลด</Link>
+                            </Button>
+                        </SheetClose>
+                        <SheetClose asChild>
+                            <Button asChild variant="ghost" className="justify-start text-lg gap-4">
+                                <Link href="#"><Info /> ข้อมูล</Link>
+                            </Button>
+                        </SheetClose>
+                    </nav>
+                    <div className="p-4 absolute bottom-0 w-full">
+                        <div className="relative w-full">
+                            <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                            <Input
+                                type="search"
+                                placeholder="ค้นหา"
+                                className="pl-10 w-full bg-secondary text-white placeholder:text-muted-foreground rounded-full border-transparent focus:bg-secondary/80 focus:ring-primary/50"
+                            />
+                        </div>
+                    </div>
+                </SheetContent>
+              </Sheet>
+            </div>
           </div>
         </div>
       </div>

@@ -18,15 +18,15 @@ export function HeroSection() {
 
       <div className="relative z-10 flex h-full items-center">
         <div className="container mx-auto px-4">
-          <div className="max-w-2xl ml-8">
-            <h1 className="text-6xl font-headline font-bold text-white drop-shadow-lg mb-4">
+          <div className="max-w-2xl md:ml-8">
+            <h1 className="text-4xl md:text-6xl font-headline font-bold text-white drop-shadow-lg mb-4">
               ฟื้นชีพ ราชินีเอาคืน
             </h1>
             <div className="flex items-center gap-4 mb-6">
               <Badge variant="destructive" className="bg-primary border-none text-sm font-bold">HOT</Badge>
               <p className="font-semibold">ฟื้นชีพ ราชินีเอาคืน</p>
             </div>
-            <Button size="lg" className="bg-primary hover:bg-primary/90 rounded-md px-8 py-6 text-lg">
+            <Button size="lg" className="bg-primary hover:bg-primary/90 rounded-md px-6 md:px-8 py-4 md:py-6 text-base md:text-lg">
               <PlayIcon className="mr-2 h-5 w-5 fill-white" />
               เล่นตอนนี้
             </Button>
