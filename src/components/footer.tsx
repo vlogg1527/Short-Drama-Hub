@@ -31,8 +31,8 @@ export function Footer() {
                 <h3 className="font-bold text-white mb-4">เกี่ยวกับ</h3>
                 <ul className="space-y-2 text-sm">
                     <li><Link href="/terms" className="hover:text-primary transition-colors">เงื่อนไขการให้บริการ</Link></li>
-                    <li><Link href="#" className="hover:text-primary transition-colors">นโยบายความเป็นส่วนตัว</Link></li>
-                    <li><Link href="#" className="hover:text-primary transition-colors">FAQ</Link></li>
+                    <li><Link href="/privacy" className="hover:text-primary transition-colors">นโยบายความเป็นส่วนตัว</Link></li>
+                    <li><Link href="/faq" className="hover:text-primary transition-colors">FAQ</Link></li>
                 </ul>
                 </div>
                 <div className="col-span-1">
