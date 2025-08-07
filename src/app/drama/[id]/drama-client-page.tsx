@@ -8,7 +8,7 @@ import { DramaCarousel } from '@/components/drama-carousel';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ThumbsUp, Bookmark, ChevronUp, ChevronDown, PlayIcon, ChevronRight, Share2, Plus, Info, MessageCircle, Heart, ChevronLeft } from 'lucide-react';
+import { ThumbsUp, Bookmark, ChevronUp, ChevronDown, PlayIcon, ChevronRight, Share2, Plus, Info, MessageCircle, Heart, ChevronLeft, Layers, MoreVertical } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useState, useRef } from 'react';
@@ -86,6 +86,13 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
         touchStartY.current = 0;
         touchEndY.current = 0;
     };
+    
+    const episodeSheetTrigger = (
+        <Button size="icon" variant="ghost" className="text-white flex flex-col h-auto">
+            <Layers className="h-8 w-8" />
+            <span className="text-xs mt-1">เลือกตอน</span>
+        </Button>
+    );
 
     return (
         <div className="flex flex-col min-h-screen bg-[#141414] text-white">
@@ -208,80 +215,89 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
                             />
                             <div className="absolute inset-0 bg-black/30" />
 
-                            {/* Top Controls */}
-                            <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-20">
-                                <Link href="/" className="text-white"><ChevronLeft className="h-8 w-8" /></Link>
-                                <div className="flex gap-2">
-                                    <Button size="icon" variant="ghost" className="text-white bg-white/20 rounded-full"><Share2 className="h-5 w-5" /></Button>
-                                    <Button size="icon" variant="ghost" className="text-white bg-white/20 rounded-full"><Info className="h-5 w-5" /></Button>
-                                </div>
-                            </div>
-
-                            {/* Center Play Button */}
+                             {/* Center Play Button */}
                              <div className="absolute inset-0 flex items-center justify-center z-10">
                                 <PlayIcon className="w-20 h-20 text-white/70" />
                             </div>
 
-                             {/* Bottom Content */}
-                            <div className="absolute bottom-0 left-0 right-0 p-4 text-white z-20 bg-gradient-to-t from-black/70 to-transparent">
-                                <h1 className="text-2xl font-bold">{drama.title}</h1>
-                                <p className="text-sm text-gray-200 mt-1 line-clamp-2">{drama.description}</p>
+                            {/* Top Controls */}
+                             <div className="absolute top-0 left-0 right-0 p-4 flex justify-between items-center z-20 bg-gradient-to-b from-black/50 to-transparent">
+                                <div className="flex items-center gap-2">
+                                    <Link href="/" className="text-white"><ChevronLeft className="h-7 w-7" /></Link>
+                                    <h1 className="text-white font-semibold text-lg">{drama.title} EP.{currentEpisode}</h1>
+                                </div>
+                                <Button size="icon" variant="ghost" className="text-white">
+                                    <MoreVertical className="h-6 w-6" />
+                                </Button>
                             </div>
                             
                             {/* Side Controls */}
-                            <div className="absolute right-2 bottom-24 flex flex-col gap-4 z-20 items-center">
-                                <Button size="icon" variant="ghost" className="text-white flex flex-col h-auto">
-                                    <Heart className="h-8 w-8" />
-                                    <span className="text-xs mt-1">12.1k</span>
+                            <div className="absolute right-2 bottom-20 flex flex-col gap-4 z-20 items-center">
+                                <Button size="icon" variant="ghost" className="text-white flex flex-col h-auto bg-black/20 rounded-full p-2">
+                                    <div className="bg-primary text-white rounded-full w-6 h-6 flex items-center justify-center text-xs font-bold mb-1">
+                                        A
+                                    </div>
+                                    <span className="text-[10px] leading-tight">ติดตาม</span>
                                 </Button>
                                 <Button size="icon" variant="ghost" className="text-white flex flex-col h-auto">
-                                    <MessageCircle className="h-8 w-8" />
-                                    <span className="text-xs mt-1">302</span>
+                                    <Heart className="h-8 w-8" />
+                                    <span className="text-xs mt-1">328.8K</span>
                                 </Button>
                                 <Button size="icon" variant="ghost" className="text-white flex flex-col h-auto">
                                     <Bookmark className="h-8 w-8" />
-                                    <span className="text-xs mt-1">บันทึก</span>
+                                    <span className="text-xs mt-1">12.6K</span>
                                 </Button>
+                                <Sheet>
+                                    <SheetTrigger asChild>
+                                        {episodeSheetTrigger}
+                                    </SheetTrigger>
+                                    <SheetContent side="bottom" className="bg-[#1C1C1C] text-white border-t-0 rounded-t-2xl h-3/4 flex flex-col">
+                                        <SheetHeader className="text-left p-4">
+                                            <SheetTitle className="text-xl">ตอนทั้งหมด ({totalEpisodes})</SheetTitle>
+                                        </SheetHeader>
+                                        <div className="flex-1 overflow-y-auto px-4">
+                                            <Tabs defaultValue={`${episodeChunks[0][0]}-${episodeChunks[0][episodeChunks[0].length-1]}`} className="w-full">
+                                                <TabsList className="grid grid-cols-3 w-full h-auto mb-4 bg-[#2C2C2C]">
+                                                    {episodeChunks.map((chunk, index) => (
+                                                        <TabsTrigger key={index} value={`${chunk[0]}-${chunk[chunk.length - 1]}`}>{`${chunk[0]}-${chunk[chunk.length - 1]}`}</TabsTrigger>
+                                                    ))}
+                                                </TabsList>
+                                                {episodeChunks.map((chunk, index) => (
+                                                    <TabsContent key={index} value={`${chunk[0]}-${chunk[chunk.length-1]}`}>
+                                                        <div className="grid grid-cols-5 gap-2 mt-4">
+                                                            {chunk.map(episode => (
+                                                                <Button 
+                                                                    key={episode} 
+                                                                    variant={episode === currentEpisode ? 'destructive' : 'secondary'}
+                                                                    className="aspect-square h-auto w-full p-0 text-sm font-normal relative"
+                                                                >
+                                                                    {episode === currentEpisode && <PlayIcon className="absolute w-4 h-4 text-white"/>}
+                                                                    <span className={`${episode === currentEpisode ? 'opacity-20' : ''}`}>{episode}</span>
+                                                                </Button>
+                                                            ))}
+                                                        </div>
+                                                    </TabsContent>
+                                                ))}
+                                            </Tabs>
+                                        </div>
+                                    </SheetContent>
+                                </Sheet>
                             </div>
 
-                            {/* Episode Selector Trigger */}
-                            <Sheet>
-                                <SheetTrigger asChild>
-                                    <Button variant="secondary" className="absolute bottom-4 left-4 right-4 z-20 bg-black/50">
-                                        ตอนที่ {currentEpisode} <ChevronUp className="ml-2 h-4 w-4" />
-                                    </Button>
-                                </SheetTrigger>
-                                <SheetContent side="bottom" className="bg-[#1C1C1C] text-white border-t-0 rounded-t-2xl h-3/4 flex flex-col">
-                                    <SheetHeader className="text-left p-4">
-                                        <SheetTitle className="text-xl">ตอนทั้งหมด ({totalEpisodes})</SheetTitle>
-                                    </SheetHeader>
-                                    <div className="flex-1 overflow-y-auto px-4">
-                                        <Tabs defaultValue={`${episodeChunks[0][0]}-${episodeChunks[0][episodeChunks[0].length-1]}`} className="w-full">
-                                            <TabsList className="grid grid-cols-3 w-full h-auto mb-4 bg-[#2C2C2C]">
-                                                {episodeChunks.map((chunk, index) => (
-                                                    <TabsTrigger key={index} value={`${chunk[0]}-${chunk[chunk.length - 1]}`}>{`${chunk[0]}-${chunk[chunk.length - 1]}`}</TabsTrigger>
-                                                ))}
-                                            </TabsList>
-                                            {episodeChunks.map((chunk, index) => (
-                                                <TabsContent key={index} value={`${chunk[0]}-${chunk[chunk.length-1]}`}>
-                                                    <div className="grid grid-cols-5 gap-2 mt-4">
-                                                        {chunk.map(episode => (
-                                                            <Button 
-                                                                key={episode} 
-                                                                variant={episode === currentEpisode ? 'destructive' : 'secondary'}
-                                                                className="aspect-square h-auto w-full p-0 text-sm font-normal relative"
-                                                            >
-                                                                {episode === currentEpisode && <PlayIcon className="absolute w-4 h-4 text-white"/>}
-                                                                <span className={`${episode === currentEpisode ? 'opacity-20' : ''}`}>{episode}</span>
-                                                            </Button>
-                                                        ))}
-                                                    </div>
-                                                </TabsContent>
-                                            ))}
-                                        </Tabs>
+                           {/* Bottom Controls */}
+                            <div className="absolute bottom-0 left-0 right-0 px-4 pb-4 text-white z-20 bg-gradient-to-t from-black/50 to-transparent">
+                                <div className="h-1 w-full bg-white/30 rounded-full mb-2">
+                                    <div className="h-full w-1/4 bg-primary rounded-full"></div>
+                                </div>
+                                <div className="flex justify-between items-center text-xs">
+                                    <div className="flex items-center gap-2">
+                                        <Button variant="ghost" className="p-1 h-auto text-xs">1.0X</Button>
                                     </div>
-                                </SheetContent>
-                            </Sheet>
+                                    <div className="flex items-center gap-2">
+                                         <Button variant="ghost" className="p-1 h-auto text-xs">1080P</Button>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
 
