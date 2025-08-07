@@ -1,3 +1,4 @@
+
 "use client"
 
 import * as React from "react"
@@ -214,7 +215,7 @@ const CarouselItem = React.forwardRef<
       aria-roledescription="slide"
       className={cn(
         "min-w-0 shrink-0 grow-0 basis-full",
-        orientation === "horizontal" ? "pl-0" : "pt-4",
+        orientation === "horizontal" ? "pl-4" : "pt-4",
         className
       )}
       {...props}
@@ -290,7 +291,7 @@ const CarouselDots = React.forwardRef<
   return (
     <div
         ref={ref}
-        className={cn("flex items-center gap-2", className)}
+        className={cn("flex items-center justify-center gap-2", className)}
         {...props}
     >
         {scrollSnaps.map((_, index) => (
@@ -298,8 +299,10 @@ const CarouselDots = React.forwardRef<
                 key={index}
                 onClick={() => onDotButtonClick(index)}
                 className={cn(
-                    "h-1 rounded-full transition-all duration-300",
-                    index === selectedIndex ? "w-8 bg-white" : "w-3 bg-white/50"
+                    "h-1.5 rounded-full transition-all duration-300",
+                    "md:h-1",
+                    index === selectedIndex ? "w-6 bg-white" : "w-1.5 bg-white/50",
+                    index === selectedIndex ? "md:w-8" : "md:w-3"
                 )}
                 aria-label={`Go to slide ${index + 1}`}
             />
