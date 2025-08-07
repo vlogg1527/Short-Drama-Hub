@@ -8,7 +8,7 @@ import { DramaCarousel } from '@/components/drama-carousel';
 import Image from 'next/image';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { ThumbsUp, Bookmark, ChevronUp, ChevronDown, PlayIcon, ChevronRight, Share2, Plus, Info, MessageCircle, Heart, ChevronLeft, Layers, MoreVertical } from 'lucide-react';
+import { ThumbsUp, Bookmark, ChevronUp, ChevronDown, PlayIcon, ChevronRight, Share2, Plus, Info, MessageCircle, Heart, ChevronLeft, Layers, MoreVertical, Tv2 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
 import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
 import { useState, useRef } from 'react';
@@ -36,6 +36,7 @@ interface DramaClientPageProps {
 
 export function DramaClientPage({ drama, recommendedDramas, totalDramas }: DramaClientPageProps) {
     const [isExpanded, setIsExpanded] = useState(false);
+    const [selectedQuality, setSelectedQuality] = useState('1080P');
     const router = useRouter();
     const touchStartY = useRef(0);
     const touchEndY = useRef(0);
@@ -75,6 +76,8 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
     };
 
     const handleTouchEnd = () => {
+        if (touchStartY.current === 0 || touchEndY.current === 0) return;
+
         if (touchStartY.current - touchEndY.current > 75) { // Swipe Up
             navigateToNextDrama();
         }
@@ -93,6 +96,8 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
             <span className="text-xs mt-1">เลือกตอน</span>
         </Button>
     );
+
+    const qualityOptions = ['540P', '720P', '1080P'];
 
     return (
         <div className="flex flex-col min-h-screen bg-[#141414] text-white">
@@ -310,7 +315,29 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
                                         <Button variant="ghost" className="p-1 h-auto text-xs">1.0X</Button>
                                     </div>
                                     <div className="flex items-center gap-2">
-                                         <Button variant="ghost" className="p-1 h-auto text-xs">1080P</Button>
+                                        <Sheet>
+                                            <SheetTrigger asChild>
+                                                <Button variant="ghost" className="p-1 h-auto text-xs">{selectedQuality}</Button>
+                                            </SheetTrigger>
+                                            <SheetContent side="bottom" className="bg-black/90 text-white border-t-0 rounded-t-2xl h-auto flex flex-col p-4">
+                                                <SheetHeader className="text-left">
+                                                  <SheetTitle className="text-sm font-normal text-muted-foreground flex items-center gap-2"><Tv2 className="w-4 h-4"/> HD คุณภาพ</SheetTitle>
+                                                </SheetHeader>
+                                                <div className="flex flex-col gap-2 mt-4">
+                                                    {qualityOptions.map(quality => (
+                                                        <Button 
+                                                          key={quality} 
+                                                          variant="ghost" 
+                                                          className={`w-full justify-center text-base py-3 h-auto ${selectedQuality === quality ? 'text-primary' : 'text-white'}`}
+                                                          onClick={() => setSelectedQuality(quality)}
+                                                        >
+                                                          {quality}
+                                                          {quality === '1080P' && <Badge className="ml-2 bg-yellow-500 text-black text-[10px] px-1 py-0.5">VIP</Badge>}
+                                                        </Button>
+                                                    ))}
+                                                </div>
+                                            </SheetContent>
+                                        </Sheet>
                                     </div>
                                 </div>
                             </div>
