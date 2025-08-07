@@ -256,7 +256,7 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
                                     <SheetTrigger asChild>
                                         {episodeSheetTrigger}
                                     </SheetTrigger>
-                                    <SheetContent side="bottom" className="bg-[#1C1C1C] text-white border-t-0 rounded-t-2xl h-auto flex flex-col p-0">
+                                    <SheetContent side="bottom" className="bg-[#1C1C1C] text-white border-t-0 rounded-t-2xl h-[50vh] flex flex-col p-0">
                                         <SheetHeader className="p-4 flex-shrink-0">
                                             <SheetTitle>(พากย์เสียง)หัวใจนักซิ่ง</SheetTitle>
                                             <SheetDescription className="flex gap-2 text-xs text-muted-foreground mt-1">
@@ -269,8 +269,8 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
                                                 <span>ตัวตนลับ</span>
                                             </SheetDescription>
                                         </SheetHeader>
-                                        <Tabs defaultValue={`${episodeChunks[0][0]}-${episodeChunks[0][episodeChunks[0].length - 1]}`} className="w-full flex-1 flex flex-col">
-                                            <div className="px-4">
+                                        <Tabs defaultValue={`${episodeChunks[0][0]}-${episodeChunks[0][episodeChunks[0].length - 1]}`} className="w-full flex-1 flex flex-col overflow-y-auto">
+                                            <div className="px-4 sticky top-0 bg-[#1C1C1C] py-2">
                                                 <TabsList className="grid grid-cols-2 w-full h-auto mb-4 bg-transparent p-0 gap-4">
                                                     {episodeChunks.map((chunk, index) => (
                                                         <TabsTrigger 
@@ -283,7 +283,7 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
                                                     ))}
                                                 </TabsList>
                                             </div>
-                                            <div className="flex-1 overflow-y-auto px-4 pb-4">
+                                            <div className="flex-1 px-4 pb-4">
                                                 {episodeChunks.map((chunk, index) => (
                                                     <TabsContent key={index} value={`${chunk[0]}-${chunk[chunk.length-1]}`}>
                                                         <div className="grid grid-cols-5 gap-3 mt-2">
