@@ -41,7 +41,7 @@ export default function Home() {
           <DramaCarousel title="ห้ามพลาด!" dramas={notToBeMissedDramas} />
         </div>
       </main>
-      <Footer className="hidden md:block" />
+      <Footer />
       <AppBanner />
     </div>
   );
