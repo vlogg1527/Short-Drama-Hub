@@ -50,19 +50,20 @@ export default function SeriesPage() {
           </div>
           <h1 className="text-3xl font-bold mb-6">ซีรีส์ทั้งหมด</h1>
           
-          <div className="flex flex-wrap items-center gap-2 mb-8">
+          <div className="flex flex-wrap items-center gap-3 mb-8">
             {displayedGenres.map((genre) => (
                 <Button 
                     key={genre} 
                     variant={selectedGenre === genre ? 'destructive' : 'secondary'}
-                    className="rounded-full text-sm font-normal"
+                    size="sm"
+                    className="rounded-full text-xs font-normal h-auto px-3 py-1.5"
                     onClick={() => handleGenreClick(genre)}
                     asChild
                 >
                     <Link href={`/category/${encodeURIComponent(genre)}`}>{genre}</Link>
                 </Button>
             ))}
-             <Button variant="secondary" size="icon" className="rounded-full" onClick={() => setIsExpanded(!isExpanded)}>
+             <Button variant="secondary" size="icon" className="rounded-full h-8 w-8" onClick={() => setIsExpanded(!isExpanded)}>
                 {isExpanded ? <ChevronUp className="h-4 w-4" /> : <ChevronDown className="h-4 w-4" />}
             </Button>
           </div>
