@@ -10,7 +10,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { ThumbsUp, Bookmark, ChevronUp, ChevronDown, PlayIcon, ChevronRight, Share2, Plus, Info, MessageCircle, Heart, ChevronLeft, Layers, MoreVertical, Tv2 } from 'lucide-react';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle } from '@/components/ui/sheet';
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetDescription } from '@/components/ui/sheet';
 import { useState, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
@@ -257,9 +257,9 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
                                         {episodeSheetTrigger}
                                     </SheetTrigger>
                                     <SheetContent side="bottom" className="bg-[#1C1C1C] text-white border-t-0 rounded-t-2xl h-auto flex flex-col p-0">
-                                        <div className="p-4 flex-shrink-0">
-                                            <h2 className="text-lg font-bold">(พากย์เสียง)หัวใจนักซิ่ง</h2>
-                                            <div className="flex gap-2 text-xs text-muted-foreground mt-1">
+                                        <SheetHeader className="p-4 flex-shrink-0">
+                                            <SheetTitle>(พากย์เสียง)หัวใจนักซิ่ง</SheetTitle>
+                                            <SheetDescription className="flex gap-2 text-xs text-muted-foreground mt-1">
                                                 <span>ละครฮอต</span>
                                                 <span> | </span>
                                                 <span>จบ</span>
@@ -267,8 +267,8 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
                                                 <span>โต้กลับ</span>
                                                 <span> | </span>
                                                 <span>ตัวตนลับ</span>
-                                            </div>
-                                        </div>
+                                            </SheetDescription>
+                                        </SheetHeader>
                                         <Tabs defaultValue={`${episodeChunks[0][0]}-${episodeChunks[0][episodeChunks[0].length - 1]}`} className="w-full flex-1 flex flex-col">
                                             <div className="px-4">
                                                 <TabsList className="grid grid-cols-2 w-full h-auto mb-4 bg-transparent p-0 gap-4">
