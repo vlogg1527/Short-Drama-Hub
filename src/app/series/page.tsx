@@ -50,7 +50,7 @@ export default function SeriesPage() {
           </div>
           <h1 className="text-3xl font-bold mb-6">ซีรีส์ทั้งหมด</h1>
           
-          <div className="flex flex-wrap items-center gap-3 mb-8">
+          <div className="flex flex-wrap items-center gap-2 mb-8">
             {displayedGenres.map((genre) => (
                 <Button 
                     key={genre} 
