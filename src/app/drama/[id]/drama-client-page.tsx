@@ -251,35 +251,51 @@ export function DramaClientPage({ drama, recommendedDramas, totalDramas }: Drama
                                     <SheetTrigger asChild>
                                         {episodeSheetTrigger}
                                     </SheetTrigger>
-                                    <SheetContent side="bottom" className="bg-[#1C1C1C] text-white border-t-0 rounded-t-2xl h-3/4 flex flex-col">
-                                        <SheetHeader className="text-left p-4">
-                                            <SheetTitle className="text-xl">ตอนทั้งหมด ({totalEpisodes})</SheetTitle>
-                                        </SheetHeader>
-                                        <div className="flex-1 overflow-y-auto px-4">
-                                            <Tabs defaultValue={`${episodeChunks[0][0]}-${episodeChunks[0][episodeChunks[0].length-1]}`} className="w-full">
-                                                <TabsList className="grid grid-cols-3 w-full h-auto mb-4 bg-[#2C2C2C]">
+                                    <SheetContent side="bottom" className="bg-[#1C1C1C] text-white border-t-0 rounded-t-2xl h-auto flex flex-col p-0">
+                                        <div className="p-4 flex-shrink-0">
+                                            <h2 className="text-lg font-bold">(พากย์เสียง)หัวใจนักซิ่ง</h2>
+                                            <div className="flex gap-2 text-xs text-muted-foreground mt-1">
+                                                <span>ละครฮอต</span>
+                                                <span> | </span>
+                                                <span>จบ</span>
+                                                <span> | </span>
+                                                <span>โต้กลับ</span>
+                                                <span> | </span>
+                                                <span>ตัวตนลับ</span>
+                                            </div>
+                                        </div>
+                                        <Tabs defaultValue={`${episodeChunks[0][0]}-${episodeChunks[0][episodeChunks[0].length - 1]}`} className="w-full flex-1 flex flex-col">
+                                            <div className="px-4">
+                                                <TabsList className="grid grid-cols-2 w-full h-auto mb-4 bg-transparent p-0 gap-4">
                                                     {episodeChunks.map((chunk, index) => (
-                                                        <TabsTrigger key={index} value={`${chunk[0]}-${chunk[chunk.length - 1]}`}>{`${chunk[0]}-${chunk[chunk.length - 1]}`}</TabsTrigger>
+                                                        <TabsTrigger 
+                                                            key={index} 
+                                                            value={`${chunk[0]}-${chunk[chunk.length - 1]}`}
+                                                            className="text-muted-foreground data-[state=active]:text-primary data-[state=active]:border-b-2 data-[state=active]:border-primary rounded-none p-2 data-[state=active]:bg-transparent"
+                                                        >
+                                                            {`${chunk[0]}-${chunk[chunk.length - 1]}`}
+                                                        </TabsTrigger>
                                                     ))}
                                                 </TabsList>
+                                            </div>
+                                            <div className="flex-1 overflow-y-auto px-4 pb-4">
                                                 {episodeChunks.map((chunk, index) => (
                                                     <TabsContent key={index} value={`${chunk[0]}-${chunk[chunk.length-1]}`}>
-                                                        <div className="grid grid-cols-5 gap-2 mt-4">
+                                                        <div className="grid grid-cols-5 gap-3 mt-2">
                                                             {chunk.map(episode => (
                                                                 <Button 
                                                                     key={episode} 
                                                                     variant={episode === currentEpisode ? 'destructive' : 'secondary'}
-                                                                    className="aspect-square h-auto w-full p-0 text-sm font-normal relative"
+                                                                    className="aspect-video h-auto w-full p-0 text-sm font-normal relative rounded-md"
                                                                 >
-                                                                    {episode === currentEpisode && <PlayIcon className="absolute w-4 h-4 text-white"/>}
-                                                                    <span className={`${episode === currentEpisode ? 'opacity-20' : ''}`}>{episode}</span>
+                                                                    {episode}
                                                                 </Button>
                                                             ))}
                                                         </div>
                                                     </TabsContent>
                                                 ))}
-                                            </Tabs>
-                                        </div>
+                                            </div>
+                                        </Tabs>
                                     </SheetContent>
                                 </Sheet>
                             </div>
