@@ -40,7 +40,7 @@ export default function CategoryPage({ params }: CategoryPageProps) {
           <h1 className="text-3xl font-bold mb-6">ซีรีส์: {categoryName}</h1>
 
           {filteredDramas.length > 0 ? (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-8">
+            <div className="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-x-4 gap-y-8">
               {filteredDramas.map((drama, index) => (
                 <DramaCard key={`${drama.id}-${index}`} drama={drama} />
               ))}
